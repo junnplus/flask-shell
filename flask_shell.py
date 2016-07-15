@@ -6,8 +6,10 @@ from flask.cli import with_appcontext
 
 
 @click.command('shell', short_help='Runs a shell in the app context.')
+@click.option('--ipython/--no-ipython', default=True)
+@click.option('--bpython/--no-bpython', default=True)
 @with_appcontext
-def shell_command():
+def shell_command(ipython, bpython):
     """Runs an interactive Python shell in the context of a given
     Flask application.  The application will populate the default
     namespace of this shell according to it's configuration.
@@ -31,5 +33,21 @@ def shell_command():
             eval(compile(f.read(), startup, 'exec'), ctx)
 
     ctx.update(app.make_shell_context())
+
+    if ipython:
+        try:
+            from IPython import embed
+            embed(banner1=banner, user_ns=ctx)
+            return
+        except ImportError:
+            pass
+
+    if bpython:
+        try:
+            from bpython import embed
+            embed(banner=banner, locals_=ctx)
+            return
+        except ImportError:
+            pass
 
     code.interact(banner=banner, local=ctx)
