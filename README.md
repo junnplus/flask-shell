@@ -31,9 +31,6 @@ Usage: flask shell [OPTIONS]
   application.
 
 Options:
-  --ptipython / --no-ptipython
-  --ptpython / --no-ptpython
-  --ipython / --no-ipython
-  --bpython / --no-bpython
+  --use-shell [ptipython|ptpython|ipython|bpython|plain]
   --help                    Show this message and exit.
 ```
