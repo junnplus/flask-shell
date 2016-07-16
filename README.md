@@ -4,7 +4,7 @@ Flask extension to improve shell command for the Flask CLI.
 
 ## Features
 
-- Support ipython/bpython
+- Support ptipython/ptpython/ipython/bpython
 
 ## Requirements
 
@@ -19,6 +19,7 @@ pip install flask-shell
 ## Usage
 
 ```
+> export FLASK_APP=happy.py
 > flask shell --help
 
 Usage: flask shell [OPTIONS]
@@ -30,6 +31,8 @@ Usage: flask shell [OPTIONS]
   application.
 
 Options:
+  --ptipython / --no-ptipython
+  --ptpython / --no-ptpython
   --ipython / --no-ipython
   --bpython / --no-bpython
   --help                    Show this message and exit.

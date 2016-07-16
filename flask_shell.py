@@ -6,10 +6,12 @@ from flask.cli import with_appcontext
 
 
 @click.command('shell', short_help='Runs a shell in the app context.')
+@click.option('--ptipython/--no-ptipython', default=True)
+@click.option('--ptpython/--no-ptpython', default=True)
 @click.option('--ipython/--no-ipython', default=True)
 @click.option('--bpython/--no-bpython', default=True)
 @with_appcontext
-def shell_command(ipython, bpython):
+def shell_command(ptipython, ptpython, ipython, bpython):
     """Runs an interactive Python shell in the context of a given
     Flask application.  The application will populate the default
     namespace of this shell according to it's configuration.
@@ -33,6 +35,22 @@ def shell_command(ipython, bpython):
             eval(compile(f.read(), startup, 'exec'), ctx)
 
     ctx.update(app.make_shell_context())
+
+    if ptipython:
+        try:
+            from ptpython.ipython import embed
+            embed(banner1=banner, user_ns=ctx)
+            return
+        except ImportError:
+            pass
+
+    if ptpython:
+        try:
+            from ptpython.repl import embed
+            embed(globals=ctx)
+            return
+        except ImportError:
+            pass
 
     if ipython:
         try:
