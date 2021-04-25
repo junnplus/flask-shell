@@ -17,7 +17,7 @@ def ptpython_shell(ctx, banner):
 
 def ipython_shell(ctx, banner):
     from IPython import embed
-    embed(banner1=banner, user_ns=ctx)
+    embed(banner1=banner, user_ns=ctx, colors="neutral")
 
 
 def bpython_shell(ctx, banner):
