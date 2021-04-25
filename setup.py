@@ -11,6 +11,12 @@ setup(
     install_requires=[
         'Flask>=0.11.0'
     ],
+    extras_require={
+        'ipython': ['ipython'],
+        'bpython': ['bpython'],
+        'ptpython': ['ptpython'],
+        'ptipython': ['ptipython'],
+    },
     entry_points={
         'flask.commands': [
             'shell=flask_shell:shell_command',
