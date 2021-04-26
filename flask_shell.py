@@ -41,7 +41,7 @@ SHELL_MAP = {
 
 
 @click.command('shell', short_help='Runs a shell in the app context.')
-@click.option('--use-shell', type=click.Choice(SHELL_TYPE), default='ipython')
+@click.option('--use-shell', type=click.Choice(SHELL_TYPE))
 @with_appcontext
 def shell_command(use_shell):
     """Runs an interactive Python shell in the context of a given
