@@ -8,7 +8,7 @@ Flask extension to improve shell command for the Flask CLI.
 
 ## Requirements
 
-- flask >= 0.11
+- flask >= 1.0.0
 
 ## Installation
 
