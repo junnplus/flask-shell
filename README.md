@@ -12,8 +12,9 @@ Flask extension to improve shell command for the Flask CLI.
 
 ## Installation
 
+To install using pip:
 ```
-pip install flask-shell
+pip install flask-shell[ipython]
 ```
 
 ## Usage

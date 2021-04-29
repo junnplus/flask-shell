@@ -16,9 +16,11 @@ def ptpython_shell(ctx, banner):
 
 
 def ipython_shell(ctx, banner):
-    from IPython import embed
-    embed(banner1=banner, user_ns=ctx, colors="neutral")
-
+    from IPython import start_ipython
+    from IPython.terminal.ipapp import load_default_config
+    config = load_default_config()
+    config.TerminalInteractiveShell.banner1 = banner
+    start_ipython(argv=[], config=config, user_ns=ctx)
 
 def bpython_shell(ctx, banner):
     from bpython import embed
@@ -47,16 +49,17 @@ def shell_command(use_shell):
     """Runs an interactive Python shell in the context of a given
     Flask application.  The application will populate the default
     namespace of this shell according to it's configuration.
+
     This is useful for executing small snippets of management code
     without having to manually configuring the application.
     """
     from flask.globals import _app_ctx_stack
     app = _app_ctx_stack.top.app
-    banner = 'Python %s on %s\nApp: %s%s\nInstance: %s' % (
+    banner = 'Python %s on %s\nApp: %s [%s]\nInstance: %s' % (
         sys.version,
         sys.platform,
         app.import_name,
-        app.debug and ' [debug]' or '',
+        app.env,
         app.instance_path,
     )
     ctx = {}
