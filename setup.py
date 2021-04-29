@@ -6,7 +6,7 @@ setup(
     author_email='junnplus@gmail.com',
     description='Flask extension to improve shell command for the Flask CLI.',
     url='https://github.com/Junnplus/flask-shell',
-    version='0.1.7',
+    version='0.1.8',
     py_modules=['flask_shell'],
     install_requires=[
         'Flask>=1.0.0'

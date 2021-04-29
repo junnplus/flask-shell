@@ -7,12 +7,28 @@ from flask.cli import with_appcontext
 
 def ptipython_shell(ctx, banner):
     from ptpython.ipython import embed
-    embed(banner1=banner, user_ns=ctx)
+    from ptpython.repl import run_config
+    from ptpython.entry_points.run_ptpython import get_config_and_history_file, create_parser
+    a = create_parser().parse_args(args=[])
+    config_file, history_file = get_config_and_history_file(a)
+
+    def configure(repl):
+        if os.path.exists(config_file):
+            run_config(repl, config_file)
+    embed(banner1=banner, user_ns=ctx, history_filename=history_file, configure=configure)
 
 
 def ptpython_shell(ctx, banner):
-    from ptpython.repl import embed
-    embed(globals=ctx)
+    from ptpython.repl import embed, run_config
+    from ptpython.entry_points.run_ptpython import get_config_and_history_file, create_parser
+    a = create_parser().parse_args(args=[])
+    config_file, history_file = get_config_and_history_file(a)
+
+    def configure(repl):
+        if os.path.exists(config_file):
+            run_config(repl, config_file)
+    print(banner)
+    embed(globals=ctx, history_filename=history_file, configure=configure)
 
 
 def ipython_shell(ctx, banner):
@@ -21,6 +37,7 @@ def ipython_shell(ctx, banner):
     config = load_default_config()
     config.TerminalInteractiveShell.banner1 = banner
     start_ipython(argv=[], config=config, user_ns=ctx)
+
 
 def bpython_shell(ctx, banner):
     from bpython import embed
